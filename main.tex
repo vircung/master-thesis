@@ -5,6 +5,19 @@
 \usepackage[utf8]{inputenc}
 \usepackage[polish]{babel}
 
+\usepackage{graphicx}
+\usepackage{xcolor}
+
+\usepackage{listings}
+\lstset{
+	numbers=left,
+	frame=L,
+	breaklines=true,
+	captionpos=b,
+	keywordstyle=\color{blue}
+}\renewcommand\lstlistingname{Listing}
+\renewcommand\lstlistlistingname{Spis listingów}
+
 \textheight 24cm  \textwidth 15cm
 \oddsidemargin 1cm
 \evensidemargin 0cm
@@ -20,6 +33,12 @@
 \include{chapter_1/what_is_opengl}
 \include{chapter_1/paradigm_shift}
 \include{chapter_1/the_new_opengl}
+
+\section{Rozdział 2}
+\newpage
+
+\section{Metody optymalizacji obliczeń}
+\include{chapter_3/pre_rendering_optimizations}
 
 \include{bibliografia}
 \end{document}
