@@ -1,0 +1,37 @@
+\subsection{Zmiana paradygmatów}
+\thispagestyle{empty}
+\par\indent
+
+Na początku 2000 roku wydajnośc GPU w skalu wykładniczej jednocześnie przenosząc oraz dodając kolejne funkcjonalności do GPU. CPU stało się pomijane w procesie ciągłego renderowania grafiki 3D z powodu braku możliwości nadążenia za rozwojem GPU. Faktem jest że dla nowoczesnych technik renderowania grafiki 3D CPU jest tak zwanym wąskim gardłem patrząc pod kątem wydajnościowym. Przez to zostały wynalezione nowe metody aby zminimalizować udział CPU w procesie renderowania.
+
+\subsubsection{Bufory}
+\thispagestyle{empty}
+\par\indent
+
+Aby wyrenderować obraz na monitorze dotychczas programiści musieli w swoim programie wykonać listę operacji, które były natychmiast interpretowane przez GPU. Ta technologia sprawowała się dobrze dla malych zestawów danych. Podczas gdy przy dużych ilościach informacji przekazywancyh do GPU wydajność była ściśle uzależiona od CPU. Działo się tak dlatego, że to sam program uruchamiał funkcje związane z GPU.
+
+Nowa metoda wprowadziła pojecie obiektów bufora. Bufory były obecne w formie list wyświetlania oraz listy wierzchołków. Jednak każda z nich posiadała odrębne wady. Listy wyświetlania nadal były wykonywane bezpośrednio z CPU. Bufory wierzchołków natomiast były przechowywane w pamięci systemu a co za tym idzie z każdym wywołaniem metody renderującej musiały być przekazywane do GPU.
+
+Aby to rozwiązać nowe obiekty buforów przechowywane były w pamięci GPU od momentu inicjalizacni aż do chwili gdy już nie były potrzebne. W OpenGL te obiekty nazwane są Vertex Buffer Object (VBO) a w technologii Direct3D były nazwane Vertex Buffer.
+
+\subsubsection{Shadery}
+\thispagestyle{empty}
+\par\indent
+
+W roku 2000 Microsoft udostępnił Direct3D~8.0, ktora wspierała nową funkcjonalność nazwaną shaderami. Shader jest ni nic więcej jak mały program uruchamiany bezpośrednio na GPU. Przez to przeznzaczając jeszcze większą ilość mocy GPU na obliczenia kóre wczześniej były wykonywane przez CPU. Podczas wydania Direct3D~8.0 ogłoszone zostały dwa rodzaje shaderów nazwanych vertex shader oraz pixel shaders.
+
+Vertex shader jest to program, który jest uruchamiany berzpośrednio dla każdego wierzchólka. Pixel shader jest analogicznm programem wykonywanym dla każdego piksela. Shadery umożliwiły większą swobodę programowania grafiki oraz wzrost wydajności przez odsunięcie od procesu generowania obrazu od CPU. Jednak kod shaderów różnił się od kody normalnego programu ze względu na specyficzną składnię, która odzwierciedlała kod maszynowy programów pisanych dla CPU.
+
+Microsoft zidentyfikowął to jako poważny problem i w roku 2003 ogłosił przełom. Możliwość pisania shaderów w formie języka wyższego poziomu High-Level Shader Language (HLSL) który był obecny w Direct3D~9.0. Nowy język umożliwiał pisania kodu shaderów w jeżyku bazującym na języku C. Od tego momentu shadery shadery były bardziej przystępne, a co za tym idzie coraz częściej używane.
+
+\subsubsection{Przestój OpenGL}
+\thispagestyle{empty}
+\par\indent
+
+W poprzedniej sekcji nie było wzmianki o OpenGL ponieważ nie wspierał on shaderów aż do roku 2004. W tym roku została wypuszczona nowa wersja OpenGL~2.0 z jednoczesnym wydaniem OpenGL Shading Languade (GLSL). Pomimo faktu, że rozszerzenia już wcześniej wspierały tę technologię jeszcze przed rokiem 2004 nie były one jednak częścią oficjalnej specyfikacji. Dodatkowo poprawne zaimplementowanie tej technologii przeciągnęło się w okresie kilku lat.
+
+OpenGL drastycznie pozostawał w tyle za Direct3D pod kądem oficjalnie wspieranych funkcjonalności. Tak jak w latach '90 Direct3D musiał nadrabiać zaległości tak w tym okresie to OpenGL pozostawał w tyle za Direct3D, co jednak nie stało się tak szybko. W latach 2004-2006 Direct3D~9.0 dominował na rynku gier komputerowych z czego niewielka ich część została wydana ze wsparciem dla OpenGL. Popularnośc Direct3D wzrosła jeszcze bardzizej wraz z wydaniem w roku 2005 przez Microsoft platformy Xbox~360 ze wsparciem Direct3D~9.0. W tym okresie ARB nie upubliczniło żadnych informacji na temat OpenGL co spowodowało błędną opinię, że OpenGL został porzucony.
+
+W 2006 roku zostało wydane OpenGL~2.1 jedynie z drobnymi poprawkami względem wersji 2.0 oraz niewielką ilością nowych funkcjonalności. Microsoft natomiast wydał nową wersję Direct3D~10.0 wraz z nowym systemem operacyjnym Windows~Vista, które przynosiły znaczące zmiany w API oraz dużą ilość nowych funkcjonalności którch brakowało OpenGL.
+
+W międzyczasie społecznośc deweloperów OpenGL żądała odpowiedzi od ARB bądź SGI. To do otrzymali było czyms zupełnie innym.

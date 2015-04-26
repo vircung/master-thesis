@@ -1,0 +1,60 @@
+\subsection{Historia OpenGL}
+\thispagestyle{empty}
+\par\indent
+
+\subsubsection{Czym jest OpenGL}
+\thispagestyle{empty}
+\par\indent
+
+Silicon Graphics (często określane jako SGI) było firmą założoną w 1981 roku, która specjalizowała się w komputerowej grafice 3D. Wytwarzała wyspecjalizowane w tej dzizedzinie urządzenia opraz oprogramowanie. Jedną z bibliotek programistycznych wytworzonych przez SGI była IRIS~GL (Integrated Raster Imaging System Graphical Library) przeznaczoną do generowania grafiki 2D oraz 3D przez wyspecjalizowane urządzenia wytworzone przez SGI. Ta biblioteka rozpoczęła rozwój technologi przeznaczonej do obróbki graficznej w latach 1990.
+
+We wczesnych latach 1990 SGI było liderem rynku wysoko wydajnościowych urządzeń przeznaczonych do generowania obrazu 3D dzięki ich urządzeniom oraz przystepnemu w użytkowaniu oprogramowaniu. IRIS~GL było biblioteką o standardzie przemysłowym pozostawiającą konkurencję pozostałe oprogramowanie. Dodatkowo za jej pomoca probowano ustandaryzować interfejs do generowania grafiki 3D. Pomimo swojej popularności IRIS~GL posiadało znaczącą wadę. Był to system własnościowy dystrybuowany z urządzeniami SGI. Konkurencja odrzucała rozwiązanie proponowane przez SGI na rzecz własnych interfejsów programistycznych (API).
+
+W śmiałym posunięciu SGI usuneło z IRIS~GL wszelkie funkcjonalności związane z grafiką. Usunięte elementy zostały opublikowane w 1992 roku jako OpenGL (Open Graphics Library) jako międzyplatformowe API przeznaczone go generowania grafiki w czasie rzzeczywistym. Twórcy oprogramowania musieli zapewnić implementację interfejsu OpenGL na swoich platformach. Natomiast firmy produkujące urządzenia graficzne musiały zapewnić  możliwość OpenGL komunikacji ze sprzętem za pomocą tak zwanych sterowników.
+
+\subsubsection{Elastyczność}
+\thispagestyle{empty}
+\par\indent
+
+Od tego momenty SGI nie udostępniało żadnego kodu źródłowego tylko specyfikację w jaki sposób API powinno działać. Dostarczyło to poziom abstrakcji dający twórcom oprogramowania oraz sprzętu dużą swobodę w sposobie implementacji interfejsu OpenGL. Taki stan rzeczy utrzymuje się do dziś. Dzięki temu wiele platform sprzętowych wspiera tej interfejs. Obecnie trudno jest znaleźć nowoczesną platformę bez żadnego wsparcia dla OpenGL.
+
+Prawdopodobnie największą przewagą, którą OpenGL posiada na konkurencyjnymi rozwiązaniami, jest fakt, że wspiera różnego rodzaju rozszerzenia. Jeżeli specyfikacja OpenGL nie wspiera danego rozszerzenia dostawca sterowników oraz sprzętu może zadecydować czy wprowadzić je do swojej implementacji. Wiele firm decuduje się na takie kroki i takie rozszerzenia są rozróżniane przez prefixy jak np \texttt{NV} dla NVIDIA czy \texttt{AGL} dla firmy Apple. Takie rozszerzenia dostarczają dodatkowe funkcjonalności jednak jak można tego się spodziewać są specyficzne dla danej platformy implementująciej interfejs OpenGL.
+
+Można wywołać te dodatkowe funkcjonalności dostarczone przez rozszerzenia. Aby tego dokonać należy załadować je przez mechanizł ładujący rozszerzenia, który wyszukuje wskaźniki do dodatkowych funkcji. Niestety mechanizm dołączania rozszerzeń nie jest ustandaryzowany więc każda platforma na własne funkcje ładujące rozszerzenia. To ograniczenie jest najbardziej widoczne w systemach Microsoft Windows gdzie pliki nagłówkowe OpenGL nie są aktualizowane od wersji OpenGL~1.1.
+
+\subsubsection{Otwarty standard}
+\thispagestyle{empty}
+\par\indent
+
+Nazwa OpenGL nie została wybrana tylko z powodu, że dobrze brzmi. Zawiera w sobie konkretne znaczenie. Od kiedy OpenGL jest ewoluującyą specyfikacją, ktorś musi decydować w jakim kierunku jest on rozwijany. Z tego powodu w 1992 roku zostało założone OpenGL Architecture Review Board (ARB). ARB składa się z kilku największych dostawców sprzętu oraz oprogramowania, którzy kolektywnie decydują o kierunku rozwoju OpenGL poprzez system głosowania. Poza decydowaniem które nowe funkcjonalności zostaną dodane go specyfikacji OpenGL, poddają oni też głosowaniu, które rozszerzenia zostaną dołączone do podstawowych funkcji biblioteki wraz z wydaniem jej nowej wersji.
+
+Każdy może dostarczyć własnej implementacji interfejsu OpenGL. Jednak aby została ona uznana za prawdziwą musi zostać zatwierdzona przez ARB po przejściu testów weryfikująca zgodnośc ze standardem. Testy te sprawdzają czy wszelkie zaimplementowane funkcjonalności dają oczekiwane wyniki dla konkretnej wersji. OpenGL szybko został wiodącym API przeznaczonym do tworzenia grafiki w czasie rzeczywistym. Równierz dzięki temu, że jest jedynym dostępnym interfejsem obecnym na wielu platformach sprzętowych.
+
+\subsubsection{OpenGL w Microsoft Windows}
+\thispagestyle{empty}
+\par\indent
+
+OpenGL posiadał już implementacje na systemach klasy UNIX gdy Microsoft wszedł na rynek z własnym systemem operacyjnym, Windows NT. Windows NT został opublikowany jako bezpośredni konkurent systemów rodziny UNIX obsługującym sieci (rozwinięciem akronimu NT jest Network Technology) oraz wspierającym 32-bitowe urządzenia. Windows NT wprowadził funkcjonalności, które są używane dotychczas, jak np. Win32 API przeznaczone do tworzenia aplikacji dla systemów Windows. Pomimo posiadania natywnych bibliotek graficznych, Microsoft ogłosił dodanie wsparcia dla technologii OpenGL w systemie Windows NT.
+
+Microsoft wprowadził implementację OpenGL wraz z wydaniem systemu Windows~NT~3.5 opublikowanym w 1994 roku. Jednak implementacja została ukończona tylko do tego stopnia aby umożliwić wsparcie przykładowych aplikacji dostarczonych przez SGI w tamtym okresie. wspomniane aplikacjie przeznaczone były jedynie do zademonstrowania jak może wyglądac implementacja OpenGL i być wzorcem. Trzeba powiedzieć, że ta implementacja była bardzo nieoptymalna a kart graficznych z akceleracją 3D w tamtym czasie było niewiele. Wydajność była tak niska, iz w bazie wiedzy Microsoftu ukazała się informacja (KB121282) ostrzegająca że użycie wygaszaczy ekrany w systemach Windows~NT~3.5 może powodować duże obciążenia systemu.
+
+\subsubsection{DirextX}
+\thispagestyle{empty}
+\par\indent
+
+Widząc możliwości do zdobycia ryku Microsoft wypuścił swoje API na platformę Windows przeznaczoną do obsługi grafiki 3D. Pierwszą próbą było WinG, kóre komunikowało się z niskopoziomowym interfejsem GDI (Graphics Device Inbterface). Nie oferowął on wsparcia dla grafiki 3D. Z tego względu MIcrosoft w 1995 roku kupił firmę RenderMorphics, która była producentem API nazwanego Reality~Lab. Kupione API zostało przemianowane na Direct3D oraz dostarczane w SDK (Software Development Kit) wraz z kilkoma innymi API przeznaczonymi do tworzenia gier.
+
+Pierwsze wersje Direct3D były niekomfortowe w użytkowaniu, a deweloperzy wolno przyswajali nowe rozwiązanie. Spowodowało to że Microsoft wciąż utrzymywał wsparcie dla OpenGL jednocześnie przeznaczając dużo zasobów na rozój Direct3D aby było ono bardziej przystępne. Specyfikacja OpenGL~1.1 była zaimplementowana w systemach Windows 65 oraz Windows~NT~4.0 i dostarczało bardzo oczekiwanego wzrostu wydajności. Był to ostatni raz gdy Microsoft zaktualizował swoją implementację OpenGL na rzecz rozwoju własnego API.
+
+\subsubsection{Ewolucja sprzętu}
+\thispagestyle{empty}
+\par\indent
+
+W późnych latach '90, OpenGL uklasował się jako standard przemysłowy w dziedzinie grafiki komputerowej. Nie tylko w programach klasy CAD (Computer Aided Design), które nie były jedynym graczem na rynku. Gry wideo na platformę PC takie jak Quake~2, Unreal czy Half-Life w pełni wykorzystywały możliwości OpenGL aby pokazać swój potencjał. Sprawiło to że były bardzo popularne. W tym okresie pojawiły się pierwsze konsumenckie karty graficzne dedykowane do renderowania grafiki 3D. Zmieniły one oblicze rynku gier wideo na zawsze.
+
+Jedną z pierwszych kart graficznynych sprzętowo wspomagajacyh grafikę 3D była Vooddoo Graphics wyprodukowana przez 3Dfx~Interactive. W momencie pojawienia się jej na rynku ustanowiła wysoki standard w wydajności pracy. Podczas gdy istniały inne dedykowane karty graficzne takie jak ATI~3D~Rage czy S3~ViRGE, karta 3Dfx przegoniła je zarówno pod względej wydajności jak i dodatkowych funkcjonalności. Ponadtwo 3Dfx dostarczała własne API do grafiki 3D nazwanego Glide, które miało bezpośredni dostęp do warstwi sprzętowej. W tym czasie Glide było pionierem pod kątem wydajności oraz szybkości renderowania grafiki. Jednak pomimo tego było to rozwiązanie dostępne w rozwiązaniach tylko jednego producenta. Sprawiło to, że parę lat później Glide stało się technologią przestarzałą wobec ówczesnych rozwiązań. Jednak przez długi okres czasu konkurencja borykała się z problemem doścignięcia tego rozwiązania pod kątem wydajności.
+
+NVIDIA szubko dogoniła konkurencję w latach '90 wypuszczając swoją kartę graficzną GeForce~256, którą nazwali GPU (Graphics Processing Unit). Wspierała ona nową technologię Transform \& Lighting (często nazywaną T\&L). Technologia ta przeniosła ciężar obliczeń związanych ze światłem oraz położeniem poszczególnych wierzchołków z głównego procesora CPU na jednostkę GPU. Główna przewagą GPU jest fakt, że jest on zaprojektowanych do obliczeń zmiennoprzecinkowych podczas gdy CPU jest wyspecjalizowane w bardziej powszechnych obliczeniach stałoprzecinkowych. 
+
+3Dfx nigdy nie zaimplementowało technologii T\&L w swoich rozwiązaniach co przyczyniło się upadku firmy. Po tym wydarzeniu NVIDIA przejeła większa część własności intelektualnej swojego konkurenta. Nie kontynuowała jednak rozwoju i wsparcia jednostek sprzętowych wydanych przez 3Dfx. W roku 2000 jedynym pozostającymi konkurentami na rynku GPU była NVIDIA z kartą graficzną GeForce~2 oraz ATI z serią produktów Radeon~7000.
+

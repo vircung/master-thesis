@@ -1,0 +1,38 @@
+\subsection{Nowy OpenGL}
+\thispagestyle{empty}
+\par\indent
+
+W roku 2006 zostało ogłoszone, że OpenGL będzie zarządzane przez Grupę Khronos zamiast firmy SGI, która wciąż posiadała do niego pełne prawa. Grupa Khronos jest konsorcjium twórców sprzętu i oprogramowania których interesuje OpenGL oraz rozwój i utrzymanie otwartych standardów API. Po 2 latach pojawiły sie informacje odnośnie OpenGL. Krążyła tez pogłoska o nowej wersji OpenGL która przyniesie duże zmiany
+
+\subsubsection{Longs Peak i Mt. Evans}
+\thispagestyle{empty}
+\par\indent
+
+Zostały ogłoszone dwie nowe wersje OpenGL z tymczasowymi nazwami Longs Peak oraz Mt. Evans. Obydwie wersje obiecywały nowe API, które będzie umożliwiało konkurencję z Direct3D~10.0. Takie założenie spełaniała wersja pod nazwą kodową Mt. Evans, która opierała się głównie na shaderach i buforach. Zaproponowano całkowicie nową metodę tworzenia obiektów przesyłanych do GPU za pomocą możliwie jak najmniejszej ilości funkcji wykorzystujących mechanizm szablonów. Znaczyło to, że nie będzie już więcej rozbierzności między implementacjami OpenGL dostarczanych przez różnych producentów.
+
+Wersja pod nazwą kodową Longs Peak opierałaby się na wstecznej kompatybilności a natomiast Mt. Evans natomiast eliminował taką możliwość na rzecz nowych rozwiązań technologicznych nie obciążonych potrzebą wspierania przestarzałych wersji.
+
+\subsubsection{OpenGL 3.0}
+\thispagestyle{empty}
+\par\indent
+
+W roku 2008 została opublikowana specyfikacja OpenGL~3.0. W nowej specyfikacji można było zauwazyć, iż tak na prawde niewiele się zmieniło i to nie była obiecywana wersja Longs Peak. Brakowało w niem obiecywanych wcześneij zmian. Jednak pojawiły się pewne nowe finkcjonalności wraz z modelem oznaczającym istniejące funkcje przestarzałymi na rzecz nowszych rozwiązań. Nie było jednak planów aby całkowicie usunąć przestarzałe metody ze specyfikacji.
+
+Społeczność zgromadzona wokół OpenGL była oburzona takim postępowaniem Grupy Khronos. Wiele zarzutów opierało się na tym, że Grupa Khronos nie chce stracić wytwórców oprogramowania klasy CAD używających starszych wersji API. Przyczyniło się to do tego, że wielu deweloperów piszących oprogramowanie na platforme Windows porzucało OpenGL na rzecz Direct3D, włączając w to podmioty wytwarzające oprogramowanie klasy CAD.
+
+Po początkowym szoku okazało się że specyfikacja OpenGL~3.0 posiada pewne cechy, których brakowało Direct3D. Na przykład OpenGL posiadał wiele funkcjonalności obecnych w Direct3D~10.0 oraz miał możliwość użycia ich w systemie Windows XP, gdzie Direct3D wymagał Windows Vista z powodu nowych sterowników.
+
+W wydanej w 2009 doku wersji OpenGL~3.1 usunięto wszelkie metody oznaczone jako przestarzałe co zblizyło API do wersji obiecanej w poprzedniej specyfikacji. Kilka miesięcy później ogłoszono kolejną wersję OpenGL~3.2, która mogła konkurować z Direct3D~10.0, kóra wprowadziła nowy model Shaderów, Geometry Shaders.
+
+\subsubsection{OpenGL 4.0}
+\thispagestyle{empty}
+\par\indent
+
+OpenGL~4.0 zostało wydane rok po wersji 3.2 jako API przeznaczone dla GPU najnowszej genereacji, które będzie konkurować z Direct 3D~11. Jednocześnie została wydana pomniejsza wersja OpenGL~3.3 posiadająca znaczną część możliwości wersji 4.0 ale posiadającą wsteczną kompatybilność z poprzednimi generacjami procesorów graficznych.
+
+Jedną z kluczowych możliwości które zostały zaimplementowane w wersji 4.0 jest Tesselacja. Pozwala ona na bardzo dokładną kontrolę nad powierzchniami renderowanych obiektów oraz automatyczną kontrolę nad poziomem szczegółowości w zależności od dystansu od kamery (Level of Detail, LOD)
+
+Aktualna wersja OpenGL daje doskonałą okazję do nauki tego API. Powodem do tego jest fakt, że coraz więcej gier komputerowych modyfikowanych jest pisanych ze wsparciem dla innych platform niż Windows. Jedynym rozwiązaniem pozwalającym na renderowanie grafiki 3D na wielu platformach bez konieczności pisania dedykowanego kodu jest właśnie OpenGL. Dla przykładu twórcy gry Half-Life, firma Valve rozszerzyła dostępność swoich gier na platformie Apple Macintosh używając do tego celu OpenGL.
+
+Dodatkowo współczesne telefony komórkowe takie jak iPhone czy oparte o system Android używają OpenGL~ES do renderowania interaktywnej grafiki 3D. OpenGL~ES jest API przeznaczonym dla systemów wbudowanych i jest bardzo zbliżonym do OpenGL. Znaczy to że kod napisany z wykorzystaniem OpenGL może być z niewielkim nakładame pracy użyty na platformach Windows, Macintosh, konsolach wideo czy urządzeniach mobilnych.
+
