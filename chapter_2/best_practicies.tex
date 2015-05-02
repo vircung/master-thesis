@@ -1,0 +1,112 @@
+Niektóre metody optymalziacyjne aplikowane sa automatycznie przez niektóre implementacje OpenGL. Jednakże warto być ich świadomym.
+
+\subsection{Swizzle}
+\thispagestyle{empty}
+\par\indent
+
+Swizzling jest do alternatywna metoda dostępy do składowych wektora. Jest ona dostępna nie tylko dla kodu shaderów ale też i w bibliotekach matematycznych, np. GLM.
+
+\begin{lstlisting}[caption=Swizzling użyty pośrednio]
+vec4 someVector;
+someVector.x + someVector.y;
+\end{lstlisting}
+
+Pozwala uzyć aż do 4 elementów w dowolnej kolejnośći w jednej linii kodu. Z każda taką operacją tworzony jest nowy wektor o tym samym bazowym typie. Akceptowana jest dowolna kombinacja ogónie przyjętych nazw komponentów wektora (x, y, z, w) dopóki wektor bazowy składa się z nich. Próba odcztania komponentu "w" z wektora 3-elementowego.
+
+\begin{lstlisting}[caption=Swizzling użyty bezpośrednio]
+vec2 someVec;
+vec4 otherVec = someVec.xyxx;
+vec3 thirdVec = otherVec.zyy;
+\end{lstlisting}
+
+Swizzling jest również zaimplementowany dla l-values. Pozwala to na inicjalizowanie całych wektorów bądź też tylkjo ich części.
+
+\begin{lstlisting}[caption=Swizzling użyty to przypisania wartości wektorom]
+vec4 someVector;
+someVector.wzyx = vec4(1.0, 2.0, 3.0, 4.0);
+someVector.zx = vec2(3.0, 5.0);
+someVector.xy = someVector.zw;
+\end{lstlisting}
+
+Istnije 3 zestawy mask wartości dla swizzlingu. Dla wektorów pozycji \texttt{xyzw}, kolorów \texttt{rgba} bądź dla koordynatów tekstur \texttt{stpq}. Od strony implementacji nie różnią się one od siebie. Jednak dodają one dodatkowa warstwę abstrakcji do kodu shaderów w podobny sposób jak odpowiednie nazywanie zmiennych.
+
+\subsection{MAD}
+\thispagestyle{empty}
+\par\indent
+
+MAD jest skrótem dla "multiply, then add". Jest powszechnie przyjęte, że operacje MAD wykonywane są znacznie szybciej niż pozostałe.
+
+\begin{lstlisting}[caption=Operacje MAD]
+vec4 result1 = (value / 2.0) + 1.0;
+vec4 result2 = (value / 2.0) - 1.0;
+vec4 result3 = (value / -2.0) + 1.0;
+
+ 
+vec4 result1 = (value * 0.5) + 1.0;
+vec4 result2 = (value * 0.5) - 1.0;
+vec4 result3 = (value * -0.5) + 1.0;
+\end{lstlisting}
+
+Prosty kompilator prawdopodobnie te operacje w kolejności jaka wynika z kodu. Przy założeniu, ze używamy bardziej zaawansowanego kolpilatora, możemy spodizewać się, że powyższy kod zostanie zoptymalizowany do postaci widocznej w drógiej części powyższego listingu.
+
+Załóżmy, że chcemy dla danego piksela ustawić wartość 1.0 dla kanału alfa oraz obliczoną wcześniej wartość dla pozostałuch kanałów. W zależności procesora GPU powyższy przykład może być wykonany za pomocą 3 instrukcji. Jednak Starsze GPU nie pozwalają na modyfikowanie poszczególnych składowych zmienniej globalnej fragment shadera odpowiedzialnej za kolor renderowanego piksela. Zatem Możemy obejść ten problem używająć techniki MAD. Oczywiście kolejnym założeniem jest sytuacja, gdy stała \texttt{constantList} zostanie wkompilowana bezpośrednio w kod wykonywalny.
+
+\begin{lstlisting}[caption=Przypisanie kanału alfa za pomocą oraz bez MAD]
+// ----------- non-MAD
+vec4 myOutputColor.xyz = myColor.xyz;
+myOutputColor.w = 1.0;
+gl_FragColor = myOutputColor;
+
+// ----------- MAD
+const vec2 constantList = vec2(1.0, 0.0);
+
+gl_FragColor = mycolor.xyzw * constantList.xxxy + constantList.yyyx;
+\end{lstlisting}
+
+
+\subsection{Interpolacja liniowa}
+\thispagestyle{empty}
+\par\indent
+
+Język GLSL dostarcza metodę pozwalającą na wykonanie interpolacji liniowej. Jej porewaga nad własną implementacją jest fakt, że dostarczona jst przez implementację OpenGL a co za tym idzie jest zoptymalizowana na poziomie kodu wykonywalnego. Do obliczeń tego typu uzyteczna jst tunkcjia "mix"
+
+\begin{lstlisting}[caption=Interpolacja liniowa]
+vec3 colorRGB_0, colorRGB_1;
+float alpha;
+resultRGB = colorRGB_0 * (1.0 - alpha) + colorRGB_1 * alpha;
+ 
+// Optymalizacjia to postaci MAD
+resultRGB = colorRGB_0  + alpha * (colorRGB_1 - colorRGB_0);
+ 
+// funkcja mix:
+resultRGB = mix(colorRGB_0, colorRGB_1, alpha);
+\end{lstlisting}
+
+\subsection{Iloczyn skalarny}
+\thispagestyle{empty}
+\par\indent
+
+Rozsądnym jest założyć, że obliczenie iloczynu skalarnego, pomimo jego złożoności, jest operacją szybką. Posiadająć tą wiedzę, jestesmy w stanie zoptymalizować sumowanie wszystkich składowych wektora. Sprowadza się ono do pewnej ilości operacji dodawania. Możemy do tego użyć zoptymalizowaną na poziomie OpenGL metody "dot" obliczającej iloczyn skalarny.
+
+\begin{lstlisting}[caption=Sumowanie składowych wektora za pomocą iloczynu skalarnego]
+vec3 fvalue1;
+result1 = fvalue1.x + fvalue1.y + fvalue1.z;
+vec4 fvalue2;
+result2 = fvalue2.x + fvalue2.y + fvalue2.z + fvalue2.w;
+
+
+const vec4 AllOnes = vec4(1.0);
+vec3 fvalue1;
+result1 = dot(fvalue1, AllOnes.xyz);
+vec4 fvalue2;
+result2 = dot(fvalue2, AllOnes);
+\end{lstlisting}
+
+\subsection{Tryb renderowania}
+\thispagestyle{empty}
+\par\indent
+
+W dużych modelach 3D jeden wierzchołek często jest użyty w wielu trójkątach. Krotność obliczeń wykonywanych w vertex shader dla jednego wierzchołka zależy od sposobu renderowania obiektu.
+
+Użygie fuunkcji \texttt{glDrawElements} powoduje uruchomienie vertex shadera tylko raz dla danego wierzchołka. Alternatywna funkcja \texttt{glDrawArrays} powoduje, że obliczenia te zostaną wykonane za każdym razem gdy dany wierzchołek zostanie użyty w trójkącie. Z tego powodu bardziej efektywne jest przekazanie danych do GPU w postaci całego modelu a renderowaia za pomocą \texttt{glDrawElements} w trybie indeksowania.
+
