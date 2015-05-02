@@ -57,6 +57,45 @@ Wzrost wydajności znowu jest znaczący. Czas wymagany do wykonania wszystkich o
 	\caption{Inforamcje diagnostyczne}
 \end{figure}
 
+
+\subsubsection{Zmniejszenie liczby operacji macierzowych}
+\thispagestyle{empty}
+\par\indent
+
+W obecny stanie uzyskaliśmy znaczny wzrost wydajności. Jednak wciąż pewne obliczenia są zbędnie powtarzane dla każdego sześcianu. Warto tuatj zauwazyć, że wszystkie obiekty obracają się w tym samym kierunku, z tą samą prędkością oraz w okół tej samej osi. Daje nam to kolejną możliwość zmniejszenia czasu potrzebnego do wykonania wszysktkich niezbędnych obliczeń.
+
+Dodatkowo mając doświadczenia z poprzednich kroków wiemy, że dobrym posunięciem będzie przeniesienie aplikowania macierzy obrotu do vertex shadera.
+
+\lstinputlisting[language=c,caption=Vertex Shader]{sources/vertex_shader_with_rotation_matrix.shader}
+\lstinputlisting[language=c,caption=Pętla renderująca]{sources/rendering_loop_wo_rotation_matrix.cpp}
+
+\begin{figure}[h]
+	\includegraphics[width=\textwidth]{images/optimized3_console}
+	\caption{Inforamcje diagnostyczne}
+\end{figure}
+
+Jak widać w tym przypadku wzrost wydajności jest znaczący. Od W stosunku do poprzedniej wersji udało się skrócić czas renderowania jednej klatki o połowę. Ten przykład pokazuje jak bardzo krytyczny jest dobór miejsca gdzie przeprowadzane są obliczenia zmiennoprzecinkowe.
+
+\subsubsection{Minimalizowanie ilości odwołań do shadera}
+\thispagestyle{empty}
+\par\indent
+
+O ile przeniesienie obliczeń do procesora GPU może okazać się zbawienne w czasie wykonywania obliczeń. To już ilość odwołań do steronika czy to do przesyłania danych lub pobierania informacji o aktualnym stanie OpenGL jest kosztowne.
+
+Warto też zauważyć, że dla każdego z renderowanych obiektów dane przesyłane do shaderów nie zmieniają się. Wywoływanie metod z OpenGL API za każdym razem jest zbędne i prowadzi do znacznego spadku wydajności.
+
+\lstinputlisting[language=c,caption=Pętla renderująca]{sources/rendering_loop_wo_api_calls.cpp}
+
+Sama zmiana jest dość subtelna i nie rzutuje na ilość obliczeń wykonywanych przez CPU. Jednak powszechnie wiadomo, że wywołanie każdej metody czy to z własnego programu czy odwołanie się do zewnętrznych bibliotek skutkuje pwnym narzutem wydajnościowym.
+
+\begin{figure}[h]
+	\includegraphics[width=\textwidth]{images/optimized4_console}
+	\caption{Inforamcje diagnostyczne}
+\end{figure}
+
+Jak w tym przypadku widać przez tak drobną zmianę zyskaliśmy niemal 30\% wzrostu wydajności względem poprzednich pomiarów. Jest to znacząca ilość względem dokonanych zmian. Pomimo swojej wydajności należy ograniczyć ilość odwołań do jednostki GPU.
+
+
 \subsubsection{Wnioski}
 \thispagestyle{empty}
 \par\indent
