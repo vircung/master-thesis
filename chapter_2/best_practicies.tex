@@ -110,3 +110,11 @@ W dużych modelach 3D jeden wierzchołek często jest użyty w wielu trójkątac
 
 Użygie fuunkcji \texttt{glDrawElements} powoduje uruchomienie vertex shadera tylko raz dla danego wierzchołka. Alternatywna funkcja \texttt{glDrawArrays} powoduje, że obliczenia te zostaną wykonane za każdym razem gdy dany wierzchołek zostanie użyty w trójkącie. Z tego powodu bardziej efektywne jest przekazanie danych do GPU w postaci całego modelu a renderowaia za pomocą \texttt{glDrawElements} w trybie indeksowania.
 
+\subsection{Ilość odwołań do API}
+\thispagestyle{empty}
+\par\indent
+
+Niezależnie od wielkości naszego programu ilość odwołań do zewnętrznych biblitek i urządzeń znacznie zmniejsza jego responsywność. Nie jest inaczej w przypadku API OpenGL. Zarówno ilość przesyłanych danych do GPU jak i każda interakcja z tym urządzeniem znacznie wpływa na wydajność naszego programu.
+
+W gestii twórców innych narzędzi programistycznych jak i sprzętowych jest to aby były one zoptymalizowane. Jednak nie jest to powód dla ktorego mielibyśmy ich uzywać ponad to czego od nich potrzebujemy.
+
